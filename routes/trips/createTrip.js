@@ -8,7 +8,7 @@ const admin = require("../../middleware/admin");
 
 //====== create function that create trip =====//
 
-router.post("/",admin,body("master_image"),body("public_id"),body("name"),
+router.post("/",body("master_image"),body("public_id"),body("name"),
     body("description"),
     body("date"),
     body("time"),
