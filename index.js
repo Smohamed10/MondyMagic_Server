@@ -1,18 +1,20 @@
-//================= init express app ===============
 const express = require("express");
 const app = express();
+const cors = require("cors");
 
-
-//=================Global middleware==================
+// Global middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("upload"));
-const cors = require("cors");
-app.use(cors());  // allow https requst,respons
 
+// CORS middleware with specific origin
+app.use(cors({
+  origin: 'https://mondy-magic-client.vercel.app', // Replace with your frontend's domain
+  methods: ['GET', 'POST'], // Allow only specific HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allow only specific headers
+}));
 
-
-//========== require modules ==========
+// Require modules
 const register = require("./routes/auth/register");
 const login = require("./routes/auth/login");
 const createTrip = require("./routes/trips/createTrip");
@@ -23,8 +25,7 @@ const deletetrip = require("./routes/trips/deletetrip");
 const getuserbooking = require("./routes/booking/getbookinguser");
 const deleteBookingT = require("./routes/booking/deletebooking");
 
-//====== API ROUTES =============
-// http://localhost:4040/
+// API Routes
 app.use("/register",register);
 app.use("/login",login);
 app.use("/createtrip",createTrip);
@@ -35,11 +36,8 @@ app.use("/deletetrip",deletetrip);
 app.use("/getusersbooking",getuserbooking);
 app.use("/deletebookingT",deleteBookingT);
 
-
-
-
-//======== run the app ============//
-app.listen(4040,"localhost",()=>{
-
-    console.log("SERVER IS RUNNING....");
-})
+// Run the app
+const port = 4040;
+app.listen(port, () => {
+    console.log(`SERVER IS RUNNING....${port}`);
+});
