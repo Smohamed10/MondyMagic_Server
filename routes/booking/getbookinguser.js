@@ -6,7 +6,7 @@ const util = require("util"); // helper
 const admin = require("../../middleware/admin");
 
 
-router.get("/",admin,async(req,res)=>{
+router.get("/",async(req,res)=>{
     try{
     const query = util.promisify(connection.query).bind(connection);
     const bookingobg = await query ("select * from booking");
