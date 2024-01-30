@@ -10,7 +10,7 @@ app.use(express.static("upload"));
 // CORS middleware with specific origin
 app.use(cors({
   origin: 'https://mondy-magic-client.vercel.app', // Replace with your frontend's domain
-  methods: ['GET', 'POST'], // Allow only specific HTTP methods
+  methods: ['GET', 'POST','DELETE','PUT'], // Allow only specific HTTP methods
   allowedHeaders: ['Content-Type', 'Authorization'], // Allow only specific headers
 }));
 
