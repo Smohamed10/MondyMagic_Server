@@ -6,7 +6,7 @@ const util = require("util"); // helper
 const authorized = require("../../middleware/authorized");
 
 //====== booking function =====//
-router.post("/:id", authorized, body("trip_id"), async (req, res) => {
+router.post("/:id", body("trip_id"), async (req, res) => {
   try {
     // Check if a booking record already exists for the user and trip
     const queryBooking = util.promisify(connection.query).bind(connection);

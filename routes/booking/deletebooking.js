@@ -8,7 +8,7 @@ const authorized = require("../../middleware/authorized");
 const fs = require("fs");
 
 
-router.delete("/:id",authorized,async(req,res)=>{
+router.delete("/:id",async(req,res)=>{
     const id = req.params.id ;
     //check if the id exist
     const query = util.promisify(connection.query).bind(connection);

@@ -6,7 +6,7 @@ const util = require("util"); // helper
 const authorized = require("../middleware/authorized");
 
 //====== booking function =====//
-router.post("/:id",authorized,body("trip_id"),async(req,res)=>{
+router.post("/:id",body("trip_id"),async(req,res)=>{
     // create object of booking 
     const bookObj = {
         user_id : req.params.id,
