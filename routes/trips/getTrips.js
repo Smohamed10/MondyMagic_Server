@@ -11,6 +11,16 @@ router.get("/", async (req, res) => {
       return res.status(404).json("There Is No Images To Show");
     }
 
+    // Fetching images for each trip
+    for (const trip of trips) {
+      const imagesQuery = `SELECT imgurl FROM triimg WHERE tripid = ${trip.id}`;
+      const imagesResult = await query(imagesQuery);
+      // Extracting image URLs and storing them in an array
+      const imageUrls = imagesResult.map((row) => row.imgurl);
+      // Concatenating image URLs with the specified separator and adding to the trip object
+      trip.master_image = imageUrls.join(", "); // Assuming you want them separated by comma and space
+    }
+
     res.status(200).json(trips);
   } catch (error) {
     console.error("Error fetching trips:", error);
