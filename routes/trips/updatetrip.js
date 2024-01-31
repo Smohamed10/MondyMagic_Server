@@ -16,7 +16,7 @@ cloudinary.config({
 
 
 
-router.put("/:id",body("master_image"),body("public_id"),body("name"),
+router.put("/:id",body("name"),
     body("description"),
     body("date"),
     body("time"),
@@ -51,9 +51,6 @@ router.put("/:id",body("master_image"),body("public_id"),body("name"),
                         date:req.body.date,
                         time:req.body.time,
                         salary:req.body.salary,
-                        master_image:req.body.master_image,
-                        public_id : req.body.public_id
-
                     }
                     await query("update trip set ? where id = ?",[trip_obj,req.params.id]);
                     res.status(200).json(req.body);
