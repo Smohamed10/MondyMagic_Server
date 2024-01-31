@@ -3,18 +3,9 @@ const { Router } = require("express");
 const connection = require("../../db/dbConnection");
 const { body, validationResult } = require('express-validator');
 const util = require("util"); // helper 
-const upload = require("../../middleware/uploadingImahe");
-const admin = require("../../middleware/admin");
+
 const cloudinary = require("cloudinary");
 //====== create function that create trip =====//
-// delclare environmet
-cloudinary.config({
-    cloud_name: 'dfdjpb4g9',
-    api_key: '746284329117832',
-    api_secret: 'I8linxEBicUJ846tHc9VmwNpiyY'
-  });
-
-
 
 router.put("/:id",body("name"),
     body("description"),
