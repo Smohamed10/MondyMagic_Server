@@ -38,12 +38,6 @@ router.put("/:id",body("name"),
                 }
                 else
                 {   
-                    //delete picture file
-                    const pub_id = trip[0].public_id;
-                    if(req.body.public_id)
-                    {
-                    await cloudinary.uploader.destroy(pub_id);
-                    }
                     // prepare the object to insert
                     const trip_obj = {
                         name: req.body.name,
