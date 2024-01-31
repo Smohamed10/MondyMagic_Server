@@ -18,6 +18,7 @@ cloudinary.config({
 
 
 router.delete("/:id", async (req, res) => {
+
   const id = req.params.id;
   // check if the id exist
   const query = util.promisify(connection.query).bind(connection);
@@ -25,25 +26,30 @@ router.delete("/:id", async (req, res) => {
   if (trip[0] == null) {
     res.status(404).json("sorry the id of trip not exist")
   }
-  else {
-     const pubID = trip[0].public_id;
-     const result = await cloudinary.uploader.destroy(pubID);
-      await query ("delete from trip where id = ? ",id)
-      if(result.result)
-      {
-        await query ("delete from trip where id = ? ",id)
-        res.status(200).json("the pic deleted.....")
-      }
-      else
-      {
-        res.status(404).json("the pic not found")
-      }
-      
+  const booking = await query ("select * from booking where trip_id = ?",id);
+  if(booking[0])
+  {
+    res.status(404).json("you cant delete this field")
   }
+  else {
+     const tripimg = await query ("select * from triimg where tripid = ?",id)
+     for (let i = 0; i < tripimg.length; i++) {
+      const pubID = tripimg[i].publicid;
+      const result = await cloudinary.uploader.destroy(pubID);
+    }
 
+      await query ("delete from trip where id = ? ",id)
+      await query ("delete from triimg where tripid = ? ",id);
+      res.status(200).json("the trip deleted");
+    
+  }
 }
+
+
+
+
 
 
 )
 
-module.exports = router;
+module.exports = router;
