@@ -11,6 +11,7 @@ router.post("/", [
   body("date").notEmpty().withMessage('Date is required'),
   body("time").notEmpty().withMessage('Time is required'),
   body("salary").notEmpty().withMessage('Salary is required'),
+  body("category").notEmpty().withMessage('Salary is required')
 ], async (req, res) => {
   try {
     // Check for validation errors
@@ -30,7 +31,8 @@ router.post("/", [
       date: req.body.date,
       time: req.body.time,
       salary: req.body.salary,
-    };
+      category: req.body.category
+      };
 
     // Insert the trip object into the database
     const insertTripQuery = util.promisify(connection.query).bind(connection);
@@ -46,7 +48,7 @@ router.post("/", [
         imgurl: imageUrl,
         publicid: publicIdArray[index] // Map corresponding public_id
       };
-      return insertTripQuery("INSERT INTO triimg SET ?", imageObj);
+      // return insertTripQuery("INSERT INTO triimg SET ?", imageObj);
     });
 
     // Execute all image insert queries

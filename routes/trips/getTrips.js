@@ -1,11 +1,12 @@
 const router = require("express").Router();
+const { body } = require("express-validator");
 const connection = require("../../db/dbConnection");
 const util = require("util");
 
-router.get("/", async (req, res) => {
+router.get("/",body("category"), async (req, res) => {
   try {
     const query = util.promisify(connection.query).bind(connection);
-    const trips = await query("SELECT * FROM trip");
+    const trips = await query("SELECT * FROM trip WHERE category = ?",req.body.category);
 
     if (trips.length === 0) {
       return res.status(404).json("There Is No Images To Show");
@@ -28,4 +29,4 @@ router.get("/", async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = router;
