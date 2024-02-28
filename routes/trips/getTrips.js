@@ -1,19 +1,18 @@
 const router = require("express").Router();
-const { body } = require("express-validator");
 const connection = require("../../db/dbConnection");
 const util = require("util");
 
-router.get("/", body("category"), async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const query = util.promisify(connection.query).bind(connection);
-    let trips;
+    let trips = "";
 
-    if (req.body.category === "All") {
+    if (req.query.category === "All") {
       // If category is "All", fetch all trips
-      trips = await query("select * from trip");
+      trips = await query("SELECT * FROM trip");
     } else {
       // Otherwise, fetch trips with the specified category
-      trips = await query("select * from trip where category = ?", req.body.category);
+      trips = await query("SELECT * FROM trip WHERE category = ?", req.query.category);
     }
 
     if (trips.length === 0) {
