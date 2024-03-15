@@ -2,7 +2,7 @@ const express = require("express");
 //const keepAwake = require('./keepAwake'); // Import the keepAwake module
 
 const app = express();
-const job=require('~/keepAwake');
+const job=require('./keepAwake');
 const cors = require("cors");
 job.start();
 // Global middleware
