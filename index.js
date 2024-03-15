@@ -2,9 +2,9 @@ const express = require("express");
 //const keepAwake = require('./keepAwake'); // Import the keepAwake module
 
 const app = express();
-const stayawake=require('./keepAwake');
+const job=require('~/keepAwake');
 const cors = require("cors");
-stayawake.start();
+job.start();
 // Global middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -23,6 +23,7 @@ const booking = require("./routes/booking/booking");
 const deletetrip = require("./routes/trips/deletetrip");
 const getuserbooking = require("./routes/booking/getbookinguser");
 const deleteBookingT = require("./routes/booking/deletebooking");
+const { job } = require("./keepAwake");
 
 // API Routes
 app.use("/register",register);
