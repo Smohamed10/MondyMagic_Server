@@ -1,9 +1,10 @@
 const mysql = require("mysql");
 
-let connection;
+let pool;
 
 function handleDisconnect() {
-  connection = mysql.createConnection({
+  pool = mysql.createPool({
+    connectionLimit: 10, // Adjust the number of connections as per your requirement
     host: "batzxafimantv3idqcnp-mysql.services.clever-cloud.com",
     user: "ufc28uhckarynlxo",
     password: "zf9V3fxnlPyszhss91Ia",
@@ -11,16 +12,8 @@ function handleDisconnect() {
     port: "3306"
   });
 
-  connection.connect((err) => {
-    if (err) {
-      console.log('Error when connecting to db:', err);
-      setTimeout(handleDisconnect, 2000); // Attempt to reconnect after a delay
-    }
-    console.log("DATABASE IS CONNECTED");
-  });
-
-  connection.on('error', function (err) {
-    console.log('DB error:', err);
+  pool.on('error', function (err) {
+    console.log('DB pool error:', err);
     if (err.code === 'PROTOCOL_CONNECTION_LOST') {
       handleDisconnect(); // Reconnect if the connection is lost
     } else {
@@ -31,4 +24,4 @@ function handleDisconnect() {
 
 handleDisconnect(); // Call the function to initiate the connection
 
-module.exports = connection;
+module.exports = pool;
