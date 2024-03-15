@@ -1,13 +1,22 @@
 // keepAwake.js
-const cron = require('node-cron');
-const http = require('http');
-
-// Schedule a cron job to ping the website every 10 minutes
-cron.schedule('*/13 * * * *', () => {
-  // Ping the website
-  http.get('https://www.mondymagic.com', (res) => {
-    console.log(`Website ping response: ${res.statusCode}`);
-  }).on('error', (err) => {
-    console.error('Website ping error:', err);
-  });
+const cron = require('cron');
+const https = require('https');
+const backend_url='https://mondy-magic-server.onrender.com';
+const job= new cron.CronJob('*/14 * * * *',function(){
+console.log('restarting server...')
+https.get(backend_url,(res)=>{
+  if(res.statusCode===200){
+    console.log('server restarted');
+  }else{
+    console.error(`failed to restatrt the server with code: ${res.statusCode}`
+    );
+  }
+})
+.on('error',(err)=>{
+console.error(`error during restart server with status code : ${res.statusCode}`);
 });
+});
+
+module.exports={
+  job,
+};

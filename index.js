@@ -2,8 +2,9 @@ const express = require("express");
 //const keepAwake = require('./keepAwake'); // Import the keepAwake module
 
 const app = express();
+const stayawake=require('./keepAwake');
 const cors = require("cors");
-
+stayawake.start();
 // Global middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
