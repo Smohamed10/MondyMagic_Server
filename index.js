@@ -9,12 +9,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("upload"));
 
-// CORS middleware with specific origin
-app.use(cors({
-  origin: 'https://www.mondymagic.com', // Replace with your frontend's domain
-  methods: ['GET', 'POST','DELETE','PUT'], // Allow only specific HTTP methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allow only specific headers
-}));
+// CORS middleware allowing requests from any origin
+app.use(cors());
 
 // Require modules
 const register = require("./routes/auth/register");
@@ -43,4 +39,3 @@ const port = 4040;
 app.listen(port || process.env.port, () => {
     console.log(`SERVER IS RUNNING....${port}`);
 });
-
